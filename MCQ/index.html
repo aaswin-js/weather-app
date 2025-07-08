@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      margin-bottom: 20px;
+    }
+
+    .output {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Multiple Choice Questions</h1>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
+
+      <!-- Question 1 -->
+      <div class="col">
+        <div class="card p-3" data-question-id="q1">
+          <h5>Which of the following is a primary reason for choosing a laptop over a desktop computer?</h5>
+          <button class="btn btn-primary mb-2" onclick="answer(1, this.closest('.card'))">Portability</button>
+          <button class="btn btn-primary mb-2" onclick="answer(0, this.closest('.card'))">Better Cooling System</button>
+          <p class="output"></p>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="col">
+        <div class="card p-3" data-question-id="q2">
+          <h5>Which language is primarily used for structuring content on the web?</h5>
+          <button class="btn btn-primary mb-2" onclick="answer(1, this.closest('.card'))">HTML</button>
+          <button class="btn btn-primary mb-2" onclick="answer(0, this.closest('.card'))">Python</button>
+          <p class="output"></p>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="col">
+        <div class="card p-3" data-question-id="q3">
+          <h5>Which of these is a JavaScript framework?</h5>
+          <button class="btn btn-primary mb-2" onclick="answer(1, this.closest('.card'))">React</button>
+          <button class="btn btn-primary mb-2" onclick="answer(0, this.closest('.card'))">Photoshop</button>
+          <p class="output"></p>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="col">
+        <div class="card p-3" data-question-id="q4">
+          <h5>What does CSS stand for?</h5>
+          <button class="btn btn-primary mb-2" onclick="answer(1, this.closest('.card'))">Cascading Style Sheets</button>
+          <button class="btn btn-primary mb-2" onclick="answer(0, this.closest('.card'))">Creative Style Scripts</button>
+          <p class="output"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let score = 0;
+    let answeredQuestions = new Set();
+
+    function answer(isCorrect, questionElement) {
+      const questionId = questionElement.dataset.questionId;
+      if (answeredQuestions.has(questionId)) return;
+
+      const output = questionElement.querySelector(".output");
+
+      if (isCorrect) {
+        output.textContent = "✅ Correct!";
+        output.style.color = "green";
+        score++;
+      } else {
+        output.textContent = "❌ Wrong!";
+        output.style.color = "red";
+      }
+
+      const buttons = questionElement.querySelectorAll("button");
+      buttons.forEach(btn => btn.disabled = true);
+
+      answeredQuestions.add(questionId);
+
+      if (answeredQuestions.size === document.querySelectorAll(".card").length) {
+        setTimeout(() => {
+          alert(`You scored ${score}/${answeredQuestions.size}`);
+        }, 300);
+      }
+    }
+  </script>
+</body>
+
+</html>
